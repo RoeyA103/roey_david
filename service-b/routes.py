@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import json
 
 from models import DataResponse
-
+from clean_data import load_df
 
 router = APIRouter()
 
@@ -13,4 +13,5 @@ def root():
 
 @router.post('/clean')
 def clean_data(data: DataResponse ):
+    dataframe = load_df(json.dumps(data.data))
     return json.dumps(data.data)
