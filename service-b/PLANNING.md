@@ -13,3 +13,14 @@ example data:
 
 fastapi
 POST /clean
+
+expected commits:
+
+feat (fastapi): server initialized
+feat (fastapi): include router
+feat (fastapi): api router and healthcheck route
+feat (fastapi): POST /clean route (return status message for now)
+feat (pandas): dataframe loader and checker
+feat (pandas): temperature_catagory column implemented
+feat (pandas): wind_status column implemented
+feat (json): packaging to be sent to service c 
