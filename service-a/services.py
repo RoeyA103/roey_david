@@ -21,7 +21,7 @@ class IngestService():
         response = requests.get(url, params=params)
         response.raise_for_status()
         data = response.json()
-        print(data)
+    
 
         if "results" not in data or not data["results"]:
             raise ValueError(f"Location not found: {location_name}")
