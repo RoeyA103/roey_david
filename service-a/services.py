@@ -2,6 +2,7 @@ import requests
 from datetime import datetime
 from dotenv import load_dotenv
 from os import getenv
+import json
 
 load_dotenv()
 
@@ -72,7 +73,7 @@ class IngestService():
         # 3. Flatten to records (ONE record per hour per location)
         for i in range(len(times)):
             record = {
-                "timestamp": datetime.fromisoformat(times[i]),
+                "timestamp": str(datetime.fromisoformat(times[i])),
                 "location_name": location["location_name"],
                 "country": location["country"],
                 "latitude": location["latitude"],
@@ -89,7 +90,8 @@ class IngestService():
 
 def send_to_service_b(ingest:list):
     url = service_b_url
-    data = ingest
+    data = {"data":ingest}
     response = requests.post(url, json=data)
     response.raise_for_status()
+    return json.loads(response.json())
     

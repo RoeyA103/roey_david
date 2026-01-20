@@ -1,4 +1,9 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
+import json
+
+from models import DataResponse
+
 
 router = APIRouter()
 
@@ -7,5 +12,5 @@ def root():
     return {"status": "healthy"}
 
 @router.post('/clean')
-def clean_data(data: str):
-    return {"data recieved": data}
+def clean_data(data: DataResponse ):
+    return json.dumps(data.data)
