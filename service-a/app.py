@@ -13,7 +13,7 @@ app = FastAPI()
 
 @app.get("/")
 def root():
-    return {"message":"runnig, you can get ingest from here -> '/ingest' "}
+    return {"message":"runnig, you can send location name from here -> 'post' /ingest' body=(location_name:str) "}
 
 app.include_router(router)
 
