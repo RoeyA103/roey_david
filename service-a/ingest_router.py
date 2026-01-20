@@ -9,6 +9,6 @@ router = APIRouter(prefix="/ingest", tags=["ingest"])
 
 @router.post("/")
 def get_records(location_name:LocationName):
-    ingest = ingests.ingest_weather_for_locations(location_name.model_dump())
+    ingest = ingests.ingest_weather_for_location(location_name.location_name)
     send_to_service_b(ingest)
     return {"message":"The data was successfully transferred"}
