@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  api1:
+    build: ./service-a
+    ports:
+      - "8080:8080"
+    environment:
+      SERVICE_B_URL: http://api2:8000/clean
+      SERVICE_HOST: "0.0.0.0"
+    depends_on:
+      - api2
+
+  api2:
+    build: ./service-b
+    ports:
+      - "8000:8000"
