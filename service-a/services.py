@@ -5,13 +5,10 @@ from os import getenv
 
 load_dotenv()
 
-service_b_host = getenv("SERVICE_B_HOST","localhost")
-service_b_port = getenv("SERVICE_B_PORT","8000")
+service_b_url = getenv("SERVICE_B_URL","http://localhost:8000/clean")
+
 
 class IngestService():
-    def __init__(self,locations:list[str]):
-        self.locations = locations
-
     # --------- Helper: Geocoding ----------
     def fetch_coordinates(location_name: str):
         url = "https://geocoding-api.open-meteo.com/v1/search"
@@ -54,42 +51,44 @@ class IngestService():
 
 
     # --------- Main Ingestion Logic ----------
-    def ingest_weather_for_locations(self):
+    def ingest_weather_for_location(self,location_name:str):
         records = []
 
-        for location_name in self.locations:
-            # 1. Get coordinates
-            location = IngestService.fetch_coordinates(location_name)
 
-            # 2. Get weather data
-            hourly_data = IngestService.fetch_hourly_weather(
-                location["latitude"],
-                location["longitude"]
-            )
+        # 1. Get coordinates
+        location = IngestService.fetch_coordinates(location_name)
 
-            times = hourly_data["time"]
-            temperatures = hourly_data["temperature_2m"]
-            wind_speeds = hourly_data["wind_speed_10m"]
-            humidities = hourly_data["relative_humidity_2m"]
+        # 2. Get weather data
+        hourly_data = IngestService.fetch_hourly_weather(
+            location["latitude"],
+            location["longitude"]
+        )
 
-            for i in range(len(times)):
-                record = {
-                    "timestamp": datetime.fromisoformat(times[i]),
-                    "location_name": location["location_name"],
-                    "country": location["country"],
-                    "latitude": location["latitude"],
-                    "longitude": location["longitude"],
-                    "temperature": temperatures[i],
-                    "wind_speed": wind_speeds[i],
-                    "humidity": humidities[i]
+        times = hourly_data["time"]
+        temperatures = hourly_data["temperature_2m"]
+        wind_speeds = hourly_data["wind_speed_10m"]
+        humidities = hourly_data["relative_humidity_2m"]
 
-                }
-                records.append(record)
+        # 3. Flatten to records (ONE record per hour per location)
+        for i in range(len(times)):
+            record = {
+                "timestamp": datetime.fromisoformat(times[i]),
+                "location_name": location["location_name"],
+                "country": location["country"],
+                "latitude": location["latitude"],
+                "longitude": location["longitude"],
+                "temperature": temperatures[i],
+                "wind_speed": wind_speeds[i],
+                "humidity": humidities[i]
+
+            }
+            records.append(record)
 
         return records
 
+
 def send_to_service_b(ingest:list):
-    url = f"{service_b_host}:{service_b_port}/clean"
+    url = service_b_url
     data = ingest
     response = requests.post(url, json=data)
     response.raise_for_status()
