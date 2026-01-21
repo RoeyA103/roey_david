@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import json
 
 from models import DataResponse
-from clean_data import load_df, temperature_catagory, wind_status
+from clean_data import load_df, temperature_catagory, wind_status, export_results
 
 router = APIRouter()
 
@@ -16,6 +16,6 @@ def clean_data(data: DataResponse ):
     dataframe = load_df(data.data)
     dataframe = temperature_catagory(dataframe)
     dataframe = wind_status(dataframe)
-    #results = dataframe.head(1).to_dict()
-    
-    return {'example results': dataframe.head(1).to_dict(orient='records')}
+    results = export_results(dataframe)
+    first_result = results[0]
+    return {'example results': first_result}
