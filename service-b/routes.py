@@ -4,7 +4,7 @@ import json
 
 from models import DataResponse
 from clean_data import load_df, temperature_catagory, wind_status, export_results
-
+from services import send
 router = APIRouter()
 
 @router.get('/')
@@ -18,4 +18,8 @@ def clean_data(data: DataResponse ):
     dataframe = wind_status(dataframe)
     results = export_results(dataframe)
     first_result = results[0]
-    return {'example results': first_result}
+    send_status = send(results)
+    return {
+        'sent to service c': send_status,
+        'example results': first_result
+        }

@@ -23,3 +23,4 @@ feat (fastapi): POST /clean route (return status message for now)
 feat (pandas): dataframe loader and checker
 feat (pandas): temperature_catagory and wind_status columns implemented
 feat (json): packaging to be sent to service c 
+feat(requests): POST to service c
