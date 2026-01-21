@@ -93,5 +93,5 @@ def send_to_service_b(ingest:list):
     data = {"data":ingest}
     response = requests.post(url, json=data)
     response.raise_for_status()
-    return json.loads(response.json())
+    return response.json()
     

@@ -13,4 +13,4 @@ def root():
 
 @router.post('/clean')
 def clean_data(data: DataResponse ):
-    return json.dumps(data.data)
+    return data.data
