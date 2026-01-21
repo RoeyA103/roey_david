@@ -1,24 +1,20 @@
 from fastapi import APIRouter
 from services import RecordsService
-from schemas import LocationName
-
-
-records_service = RecordsService()
 
 router = APIRouter(prefix="/records", tags=["records"])
 
 @router.post("/")
 def save_records():
-    pass
+    RecordsService.save_records()
 
 @router.get("/")
 def get_records():
-    pass
+    RecordsService.get_records()
 
 @router.get("/count")
 def get_records_count():
-    pass
+    RecordsService.get_records_count()
 
 @router.get("/avg-temperature")
 def get_avg_temperature():
-    pass
+    RecordsService.get_avg_temperature()

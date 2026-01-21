@@ -19,6 +19,3 @@ pool = pooling.MySQLConnectionPool(
     database=database
 )
 
-conn = pool.get_connection()
-print("Connection successful:", conn.is_connected())
-conn.close()
