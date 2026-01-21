@@ -3,6 +3,7 @@ from services import RecordsService
 
 router = APIRouter(prefix="/records", tags=["records"])
 
+
 @router.post("/")
 def save_records():
     RecordsService.save_records()

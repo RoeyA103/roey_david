@@ -26,6 +26,10 @@ spec:
           env:   
           - name: MYSQL_ROOT_PASSWORD
             value: "123"
+          - name: MYSQL_USER
+            value: weather_user
+          - name: MYSQL_PASSWORD
+            value: "123"
 
 
 

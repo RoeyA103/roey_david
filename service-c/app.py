@@ -3,6 +3,7 @@ import uvicorn
 from records_router import router
 from dotenv import load_dotenv
 from os import getenv
+from services import RecordsService
 
 load_dotenv()
 
@@ -10,6 +11,10 @@ host = getenv("SERVICE_HOST","localhost")
 port = int(getenv("SERVICE_PORT",8001))
 
 app = FastAPI()
+
+@app.lifespan()
+def init_db():
+    RecordsService.init_db()
 
 @app.get("/")
 def root():

@@ -25,7 +25,7 @@ spec:
         - name: SQL_HOST
           value: "mysql-0.mysql-svc"
         - name: SQL_USER
-          value: "root"
+          value: "weather_user"
         - name: SQL_PASS
           value: "123"
         - name: DATABASE
