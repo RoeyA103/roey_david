@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 import json
-
 from models import DataResponse
 from clean_data import load_df, temperature_catagory, wind_status, export_results
 from services import send
