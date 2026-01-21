@@ -47,11 +47,30 @@ class RecordsService():
             
 
     @staticmethod
-    def save_records():
+    def save_records(data):
         try:
             conn = pool.get_connection()
             cursor = conn.cursor()
-            #fiil your code here!!!----------
+            query = """
+                insert into weather_records (
+                    timestamp,
+                    location_name,
+                    country,
+                    latitude,
+                    longitude,
+                    temperature,
+                    wind_speed,
+                    humidity,
+                    temperature_category,
+                    wind_category)
+                values (
+                    %s,%s,%s,%s,%s,%s,%s,%s,%s,%s
+                );
+            """
+            for item in data:
+                values = item.values()
+                cursor.execute(query, values)
+            conn.commit()
         except Error as e:
             print("Error while connecting to MySQL:", e)
 

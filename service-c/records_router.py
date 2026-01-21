@@ -5,8 +5,8 @@ router = APIRouter(prefix="/records", tags=["records"])
 
 
 @router.post("/")
-def save_records():
-    RecordsService.save_records()
+def save_records(data):
+    RecordsService.save_records(data)
 
 @router.get("/")
 def get_records():
