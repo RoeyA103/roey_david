@@ -73,7 +73,7 @@ class IngestService():
         # 3. Flatten to records (ONE record per hour per location)
         for i in range(len(times)):
             record = {
-                "timestamp": str(datetime.fromisoformat(times[i])),
+                "timestamp": datetime.fromisoformat(times[i]).isoformat(),
                 "location_name": location["location_name"],
                 "country": location["country"],
                 "latitude": location["latitude"],
