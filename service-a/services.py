@@ -2,7 +2,6 @@ import requests
 from datetime import datetime
 from dotenv import load_dotenv
 from os import getenv
-import json
 
 load_dotenv()
 
